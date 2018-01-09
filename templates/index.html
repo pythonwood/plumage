@@ -4,7 +4,7 @@
 {% block content %}
 
   {% block content_title %}
-    <h2>Articles</h2>
+    <h2>随笔列表</h2>
   {% endblock %}
 
   {% for article in articles_page.object_list %}
@@ -13,7 +13,7 @@
         <h2><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags|e }}">{{ article.title }}</a></h2>
       </header>
       <div>{{ article.summary }}</div>
-      <div><a class="btn btn-primary" href="{{ SITEURL }}/{{ article.url }}"><strong>➟ Read more</strong></a></div>
+      <div><a class="btn btn-primary" href="{{ SITEURL }}/{{ article.url }}"><strong>➟ 阅读全文</strong></a></div>
     </article>
     <hr/>
   {% endfor %}

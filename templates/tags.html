@@ -2,13 +2,13 @@
 
 
 {% block title %}
-  All tags
+  所有标签
 {% endblock %}
 
 
 {% block top_center %}
   <h1>
-    <a href="{{ SITEURL }}/{{ TAGS_SAVE_AS }}" rel="bookmark" title="Permalink to tag list">Tags</a>
+    <a href="{{ SITEURL }}/{{ TAGS_SAVE_AS }}" rel="bookmark" title="Permalink to tag list">标签</a>
   </h1>
 {% endblock %}
 
@@ -34,8 +34,8 @@
     {% endif %}
   {% endfor %}
 
-  {% for (tier_name, tier_tags) in [("Top", tier_1), ("Middle", tier_2), ("Lower", tier_3)] %}
-    <h2>{{ tier_name }} tier</h2>
+  {% for (tier_name, tier_tags) in [("热门", tier_1), ("中间", tier_2), ("冷门", tier_3)] %}
+    <h2>{{ tier_name }} 标签</h2>
     <p>
       {% for tag in tier_tags %}
         {{ m.render_tag(tag) }}

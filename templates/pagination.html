@@ -3,7 +3,7 @@
     <ul class="pagination">
       {% if articles_page.has_previous() %}
         <li>
-          <a href="{{ SITEURL }}/{{ articles_previous_page.url }}"
+        <a href="{{ SITEURL }}/{{ articles_previous_page.url }}"
               aria-label="Previous" rel="prev">
             <span aria-hidden="true">&larr;</span>
           </a>
@@ -18,8 +18,8 @@
 
       {% for num in articles_paginator.page_range %}
         {% set linked_pages = [
-             1, 2, articles_page.number - 1, articles_page.number,
-             articles_page.number + 1, articles_paginator.num_pages - 1,
+             1, 2, articles_page.number - 2, articles_page.number - 1, articles_page.number,
+             articles_page.number + 1, articles_page.number + 2, articles_paginator.num_pages - 1,
              articles_paginator.num_pages] %}
         {% if num in linked_pages %}
           {% set is_current_page = (num == articles_page.number) -%}

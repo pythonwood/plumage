@@ -60,8 +60,8 @@
     {% endif %}
 
     {% if ARTICLE_EDIT_LINK %}
-      <p>Found a typo ? Want to fix it ?</p>
-      <a class="btn btn-info btn-block" href="{{ ARTICLE_EDIT_LINK % {'slug': article.slug} }}"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <p>修正错误</p>
+      <a class="btn btn-info btn-block" href="{{ ARTICLE_EDIT_LINK % {'slug': article.slug} }}"><i class="fa fa-random fa-white fa-fw"></i> 到GitHub上编辑</a>
       <hr/>
     {% endif %}
 
@@ -70,12 +70,12 @@
         <ul class="pager">
           <li class="previous {% if not article.prev_article %} disabled {% endif %}">
             <a {% if article.prev_article %} href="{{ SITEURL }}/{{ article.prev_article.url }}" title="{{ article.prev_article.title|striptags|e }}" {% endif %} rel="prev">
-              <span aria-hidden="true">←</span> Older
+              <span aria-hidden="true">←</span> 前一篇
             </a>
           </li>
           <li class="next {% if not article.next_article %} disabled {% endif %}">
             <a {% if article.next_article %} href="{{ SITEURL }}/{{ article.next_article.url }}" title="{{ article.next_article.title|striptags|e }}" {% endif %} rel="next">
-              Newer <span aria-hidden="true">→</span>
+              后一篇 <span aria-hidden="true">→</span>
             </a>
           </li>
         </ul>
@@ -92,10 +92,15 @@
 
   <div>
     {{ article.content }}
+    <br/><br/> <p style="color: grey;"><b>
+      {% if article.authors %}
+      原文出自<a href="{{ SITEURL }}" rel="author">{{ AUTHOR|e }}</a>发表的<a href="{{ SITEURL }}/{{ article.url }}" target="_blank">{{ SITEURL }}/{{ article.url }}</a>
+      {% endif %}
+    </b></p> <br/><br/>
   </div>
 
   {% if article.related_posts %}
-    <h3>Related content</h3>
+    <h3>扩展阅读</h3>
     <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
       {% for related_post in article.related_posts %}

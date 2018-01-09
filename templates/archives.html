@@ -2,13 +2,13 @@
 
 
 {% block title %}
-  Archives
+  随笔归档
 {% endblock %}
 
 
 {% block top_center %}
   <h1>
-    <a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}" rel="bookmark" title="Permalink to archives">Archives</a>
+    <a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}" rel="bookmark" title="Permalink to archives">日期归档</a>
   </h1>
 {% endblock %}
 
@@ -50,7 +50,7 @@
                   <dl class="dl-horizontal">
                 {% endif %}
 
-                <dt><abbr class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime('%b. %d') }}</abbr></dt>
+                <dt><abbr class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime('%x') }}</abbr></dt>
                 <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
 
                 {% if loop.last %}

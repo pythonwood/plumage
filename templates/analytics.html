@@ -28,4 +28,30 @@
         g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
     })();
     </script>
+
 {% endif %}
+
+{% if BAIDU_ANALYTICS %}
+    <!-- Baidu Analytics-->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?{{BAIDU_ANALYTICS}}";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+{% endif %}
+
+    <!-- CNZZ Analytics-->
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1270496461'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1270496461%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+
+    <!-- 谷歌网站翻译工具 -->
+    <!--
+    <div id="google_translate_element"></div><script type="text/javascript">
+function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-109845932-1'}, 'google_translate_element');
+}
+    </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    -->

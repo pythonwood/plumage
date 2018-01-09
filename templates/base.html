@@ -6,14 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}Home{% endblock title %} | {{ SITENAME }}</title>
+    <title>{% block title %}首页{% endblock title %} | {{ SITESUBTITLE }}</title>
 
     <meta name="author" content="{{ AUTHOR|e }}"/>
+    {% if article and article.summary %}
+    <meta name="description" content="{{ article.summary | truncate(120, killwords = False, end = "…") | striptags }}"/>
+    {% else %}
+    <meta name="description" content="{{ SITENAME }} {{ SITESUBTITLE }}"/>
+    {% endif%}  
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/jquery.mglass.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygment-solarized-dark.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css"/>
@@ -22,11 +27,11 @@
     {% endif %}
 
     <!-- Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
     {% if TYPOGRIFY %}
-      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.lug.ustc.edu.cn/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
     {% endif %}
 
     {% block extra_css %}{% endblock %}
@@ -37,35 +42,56 @@
     <!-- Feeds -->
     {% set all_feeds = [] %}
     {% if FEED_ALL_ATOM %}
-      {% if all_feeds.append({'kind': 'Atom', 'url': FEED_ALL_ATOM, 'name': 'All posts'}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'Atom', 'url': FEED_ALL_ATOM, 'name': '所有随笔'}) %}{% endif %}
     {% endif %}
     {% if FEED_ALL_RSS %}
-      {% if all_feeds.append({'kind': 'RSS', 'url': FEED_ALL_RSS, 'name': 'All posts'}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'RSS', 'url': FEED_ALL_RSS, 'name': '所有随笔'}) %}{% endif %}
     {% endif %}
     {% if FEED_ATOM %}
-      {% if all_feeds.append({'kind': 'Atom', 'url': FEED_ATOM, 'name': 'Latest posts'}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'Atom', 'url': FEED_ATOM, 'name': '获取更新'}) %}{% endif %}
     {% endif %}
     {% if FEED_RSS %}
-      {% if all_feeds.append({'kind': 'RSS', 'url': FEED_RSS, 'name': 'Latest posts'}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'RSS', 'url': FEED_RSS, 'name': '获取更新'}) %}{% endif %}
     {% endif %}
     {% if CATEGORY_FEED_ATOM and category is defined %}
-      {% if all_feeds.append({'kind': 'Atom', 'url': CATEGORY_FEED_ATOM|format(category.slug), 'name': 'Category: ' + category.name}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'Atom', 'url': CATEGORY_FEED_ATOM|format(category.slug), 'name': '分类: ' + category.name}) %}{% endif %}
     {% endif %}
     {% if CATEGORY_FEED_RSS and category is defined %}
-      {% if all_feeds.append({'kind': 'RSS', 'url': CATEGORY_FEED_RSS|format(category.slug), 'name': 'Category: ' + category.name}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'RSS', 'url': CATEGORY_FEED_RSS|format(category.slug), 'name': '分类: ' + category.name}) %}{% endif %}
     {% endif %}
     {% if TAG_FEED_ATOM and tag is defined %}
-      {% if all_feeds.append({'kind': 'Atom', 'url': TAG_FEED_ATOM|format(tag.slug), 'name': 'Tag: ' + tag.name}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'Atom', 'url': TAG_FEED_ATOM|format(tag.slug), 'name': '标签: ' + tag.name}) %}{% endif %}
     {% endif %}
     {% if TAG_FEED_RSS and tag is defined %}
-      {% if all_feeds.append({'kind': 'RSS', 'url': TAG_FEED_RSS|format(tag.slug), 'name': 'Tag: ' + tag.name}) %}{% endif %}
+      {% if all_feeds.append({'kind': 'RSS', 'url': TAG_FEED_RSS|format(tag.slug), 'name': '标签: ' + tag.name}) %}{% endif %}
     {% endif %}
     {% for feed in all_feeds %}
       <link href="{{ FEED_DOMAIN }}/{{ feed.url }}" type="application/{{ feed.kind|lower }}+xml" rel="alternate" title="{{ SITENAME|e }} - {{ feed.name|e }} - {{ feed.kind }} Feed"/>
     {% endfor %}
+    {% if article %}
+    <!--https://blog.kmonsoor.com/pelican-how-to-make-seo-friendly/-->
+    <link rel="canonical" href="{{ SITEURL }}/{{ article.url }}"/>
+    {% endif%}
 
     {% block head %}
     {% endblock %}
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{GOOGLE_ANALYTICS}}"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+    gtag('config', '{{GOOGLE_ANALYTICS}}');
+    </script>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3784870097299714",
+        enable_page_level_ads: true
+      });
+    </script>
 
   </head>
 
@@ -77,7 +103,7 @@
         {% if SITE_THUMBNAIL %}
           <a href="{{ SITEURL }}" class="avatar-container pull-left">
             <div class="avatar {% if SITE_THUMBNAIL_TEXT %} animate {% endif %}">
-              <div class="side"><img src="{{ SITE_THUMBNAIL }}" class="img-responsive"/></div>
+              <div class="side"><img alt="site thumbnail" src="{{ SITE_THUMBNAIL }}" class="img-responsive"/></div>
               {% if SITE_THUMBNAIL_TEXT %}
                 <div class="side back"><p class="text-center">{{ SITE_THUMBNAIL_TEXT }}</p></div>
               {% endif %}
@@ -132,7 +158,7 @@
             <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
               <div class="form-group">
                 <div class="input-group">
-                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
+                  <input type="text" name="q" class="form-control search-query" placeholder="站内搜索" required />
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
                   </span>
@@ -147,7 +173,7 @@
             <form class="navbar-form navbar-right" role="search" action="{{ SITEURL }}/search.html" onsubmit="return validateForm(this.elements['q'].value);">
               <div class="form-group">
                 <div class="input-group">
-                  <input type="text" name="q" id="tipue_search_input" class="form-control search-query" placeholder="Search" required />
+                  <input type="text" name="q" id="tipue_search_input" class="form-control search-query" placeholder="站内搜索" required />
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa
                         fa-search fa-fw"></i></button>
@@ -224,22 +250,22 @@
           {% endfor %}
 
           <div class="col-md-2">
-            <h5>Browse content by</h5>
+            <h5>用以下方式浏览</h5>
             <ul class="list-unstyled">
               {% if CATEGORIES_SAVE_AS %}
-                <li><a href="{{ SITEURL }}/{{ CATEGORIES_SAVE_AS }}"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="{{ SITEURL }}/{{ CATEGORIES_SAVE_AS }}"><i class="fa fa-tags"></i> 分类</a></li>
               {% endif %}
               {% if ARCHIVES_SAVE_AS %}
-                <li><a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}"><i class="fa fa-calendar"></i> 日期</a></li>
               {% endif %}
               {% if TAGS_SAVE_AS %}
-                <li><a href="{{ SITEURL }}/{{ TAGS_SAVE_AS }}"><i class="fa fa-tag"></i> Tags</a></li>
+                <li><a href="{{ SITEURL }}/{{ TAGS_SAVE_AS }}"><i class="fa fa-tag"></i> 标签</a></li>
               {% endif %}
             </ul>
           </div>
 
           <div class="col-md-2 text-muted">
-            <h5>Copyright notice</h5>
+            <h5>Copyright信息</h5>
             {% set date_start = dates[-1].date.year if dates else None %}
             {% set date_end   = dates[0].date.year if dates else None %}
             <p>© Copyright {{ date_start if date_start }}{{ '-%s' % date_end if date_end and date_end != date_start }} {{ AUTHOR }}.</p>
@@ -249,17 +275,17 @@
           </div>
 
           <div class="col-md-2 text-muted">
-            <h5>Disclaimer</h5>
+            <h5>免责声明</h5>
             {% if DISCLAIMER %}
               <p>{{ DISCLAIMER }}</p>
             {% else %}
-              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+              <p>本网站所表达的所有观点均为我个人的观点，并不代表我以前，现任和未来雇主或其任何关联机构，合作伙伴或客户的意见。</p>
             {% endif %}
           </div>
 
           <div class="col-md-2">
             {% if all_feeds %}
-              <h5>Feeds</h5>
+              <h5>RSS订阅更新</h5>
               <ul class="list-unstyled">
                 {% for feed in all_feeds %}
                   <li><small><a href="{{ FEED_DOMAIN }}/{{ feed.url }}"><i class="fa fa-rss"></i> {{ feed.name }} ({{ feed.kind }})</a></small></li>
@@ -271,12 +297,12 @@
         </div>
       </div>
 
-      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
+      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> 回到顶部</a></h5>
 
       <div class="container">
         <div class="row col-md-12 text-muted text-center">
-          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+          博客使用<a href="https://getpelican.com">Pelican</a>驱动<br/>
+          感谢<a href="https://kevin.deldycke.com">Kevin Deldycke</a>原创<a href="https://github.com/kdeldycke/plumage"> Plumage</a> 主题
         </div>
       </div>
 

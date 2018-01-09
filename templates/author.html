@@ -2,12 +2,12 @@
 
 
 {% block title %}
-  Articles by {{ author.name }}
+  {{ author.name }}的随笔
 {% endblock %}
 
 
 {% block top_center %}
   <h1>
-    <a href="{{ SITEURL }}/{{ author.url }}" rel="bookmark" title="Permalink to {{ author.name|e }}'s articles">Articles by {{ author.name }}</a>
+    <a href="{{ SITEURL }}/{{ author.url }}" rel="bookmark" title="Permalink to {{ author.name|e }}'s articles">{{ author.name }} 的随笔</a>
   </h1>
 {% endblock %}
