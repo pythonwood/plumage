@@ -44,8 +44,26 @@
     </script>
 {% endif %}
 
+{% if CNZZ_ANALYTICS %}
     <!-- CNZZ Analytics-->
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1270496461'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1270496461%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_{{CNZZ_ANALYTICS}}'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D{{CNZZ_ANALYTICS}}%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+{% endif %}
+
+{% if _51LA_ANALYTICS %}
+<img style='display:none;' alt="我要啦" src="//send.users.51.la/go2?id={{_51LA_ANALYTICS}}" />
+{% endif %}
+
+{% if CLICKY_ANALYTICS %}
+<script src="//static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init({{CLICKY_ANALYTICS}}); }catch(e){}</script>
+<noscript><p><img style='display:none;' alt="Clicky" src="//in.getclicky.com/{{CLICKY_ANALYTICS}}ns.gif" /></p></noscript>
+{% endif %}
+
+{% if CLICKY_ANALYTICS %}
+<script src="//static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init({{CLICKY_ANALYTICS}}); }catch(e){}</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/{{CLICKY_ANALYTICS}}ns.gif" /></p></noscript>
+{% endif %}
 
     <!-- 谷歌网站翻译工具 -->
     <!--
